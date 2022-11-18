@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "Hash": "13pmZOtBn8WaGQb1S7GwRFtxIjICzYGR/Pk9wOOFjCs=",
+  "Source": "ERH_API",
+  "BasePath": "_content/ERH_API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ERH_API\\wwwroot",
+      "Source": "ERH_API",
+      "ContentRoot": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\",
+      "BasePath": "_content/ERH_API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\uploads\\0.jpeg",
+      "SourceId": "ERH_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\",
+      "BasePath": "_content/ERH_API",
+      "RelativePath": "uploads/0.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\0.jpeg"
+    },
+    {
+      "Identity": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\uploads\\1.jpeg",
+      "SourceId": "ERH_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\",
+      "BasePath": "_content/ERH_API",
+      "RelativePath": "uploads/1.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\1.jpeg"
+    },
+    {
+      "Identity": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\uploads\\2.jpeg",
+      "SourceId": "ERH_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Eduardo\\Projetos\\DotNet\\ERH\\ERH_API\\wwwroot\\",
+      "BasePath": "_content/ERH_API",
+      "RelativePath": "uploads/2.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2.jpeg"
+    }
+  ]
+}

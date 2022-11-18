@@ -1,0 +1,118 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col align-self-center">
+      <h1 style="text-align: center; margin-bottom: 1vw; margin-top: 1vw;">FUNCIONARIOS</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let alert of alerts" class="alerts col align-self-end">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+    </div>
+  </div>
+  <accordion [closeOthers]="true" [isAnimated]="true" class="accordion">
+    <div *ngFor="let func of funcionarios; let i = index">
+      <accordion-group *ngIf="this.dpSelecionado == undefined ? true : this.dpSelecionado == func.departamentoId">
+        <button class="btn btn-block btn-link justify-content-between d-flex w-100  shadow-none"
+                accordion-heading type="button" style="text-decoration:none !important; color: black;">
+          <div class="pull-left float-left">{{func.nmFuncionario}}</div>
+        </button>
+        <div>
+          <button (click)="openModal(template, 'update', func)" type="button" class="badge text-bg-warning pull-left float-left badgeButton">Editar</button>
+          <button (click)="openModal(confirmModal, 'delete', func)" type="button" class="badge text-bg-danger pull-left float-left badgeButton">Excluir</button>
+        </div>
+        <ng-container>
+          <table class="table" style="cursor:default;">
+            <thead>
+              <tr>
+                <td scope="row">Foto</td>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">RG</th>
+                <th scope="col">Setor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img class="profilePicture" src="{{func.foto}}" /></td>
+                <th scope="row">{{func.id}}</th>
+                <td>{{func.nmFuncionario}}</td>
+                <td>{{func.rg}}</td>
+                <td>{{this.getNmDepartamento(func.departamentoId)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        </accordion-group>
+    </div>
+    <div style="margin-top:0.25vw">
+      <button type="button" class="btn btn-dark" (click)="openModal(template, 'add')" [disabled]="this.departamentos.length == 0">Novo Funcionario</button>
+      <div *ngIf="this.departamentos.length == 0" id="nomeHelp" class="form-text">Não é possivel adicionar funcionario, nenhum departamento criado</div>
+    </div>
+  </accordion>
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 *ngIf="tpModal == 'add'" class="modal-title pull-left">Novo Funcionario</h4>
+    <h4 *ngIf="tpModal == 'update'" class="modal-title pull-left">Alterar Funcionario</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form [formGroup]="funcionarioForm">
+      <div class="mb-3 ">
+        <label class="form-label">Foto</label>
+        <br />
+        <div class="row justify-content-md-center" *ngIf="tpModal == 'update'">
+          <img class="profilePictureModal" src="{{this.funcionarioModal.foto}}" />
+        </div>
+        <input class="form-control" type="file" #fileToUpload accept="image/*" (change)="selectFile($event)" observeFiles />
+
+        <div id="nomeHelp" class="form-text" >Insira a foto do funcionario</div>
+
+        <label for="exampleInputNome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="exampleInputNome" aria-describedby="nomeHelp"
+               formControlName="nmFuncionario" value="">
+        <div id="nomeHelp" class="form-text">Insira o nome do funcionario</div>
+
+        <label for="exampleInputNome" class="form-label">RG</label>
+        <input type="text" class="form-control" id="exampleInputNome" aria-describedby="nomeHelp"
+               formControlName="rg" value="">
+        <div id="nomeHelp" class="form-text">Insira o numero do RG</div>
+
+        <label for="exampleInputNome" class="form-label">Setor</label>
+        <select class="form-control" id="exampleInputNome" aria-describedby="nomeHelp" formControlName="departamentoId">
+          <option *ngFor="let dp of departamentos" value="{{dp.id}}">{{dp.nmDepartamento}}</option>
+        </select>
+        <div id="nomeHelp" class="form-text">Selecione o Setor</div>
+      </div>
+      <button *ngIf="tpModal == 'add'" class="btn btn-primary" (click)="addFuncionario(); modalRef?.hide()"
+              [disabled]="!this.funcionarioForm.valid || this.file == ''">
+        Adicionar
+      </button>
+      <button *ngIf="tpModal == 'update'" class="btn btn-primary" (click)="updateFuncionario(); modalRef?.hide()"
+              [disabled]="this.hasChange() || !this.funcionarioForm.valid">
+        Salvar Alteracoes
+      </button>
+    </form>
+  </div>
+</ng-template>
+
+
+<ng-template #confirmModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Confirmar exclusão</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Deseja apagar este funcionario?</p>
+    <button class="btn btn-danger" (click)="deleteFuncionario(); modalRef?.hide()">Deletar</button>
+  </div>
+</ng-template>

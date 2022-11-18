@@ -1,0 +1,34 @@
+<div class="container" >
+  <h1 style="text-align: center; margin-bottom: 1vw; margin-top: 1vw;">Home</h1>
+  <h4 *ngIf="departamentos.length == 0" style="text-align: center; margin-bottom: 1vw; margin-top: 1vw;">Nenhum Setor Criado, crie o primeiro na aba de Setores!</h4>
+  <accordion [closeOthers]="true" [isAnimated]="true" class="accordion">
+    <div *ngFor="let dp of departamentos">
+      <accordion-group style="text-decoration: none;">
+        <button class="btn btn-link btn-block justify-content-between d-flex w-100  shadow-none"
+                accordion-heading type="button" style="text-decoration:none !important; color: black;">
+          <div class="pull-left float-left">{{dp.nmDepartamento}} - {{dp.sigla}}</div>
+          <span class="badge text-bg-dark float-right pull-right">{{dp.funcionarios.length}}</span>
+        </button>
+        <table class="table" style="cursor:default;">
+          <thead>
+            <tr>
+              <th scope="col">Foto</th>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">RG</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let funcionario of dp.funcionarios">
+              <td><img src="{{funcionario.foto}}" class="img-fluid profilePicture" alt="..."></td>
+              <th scope="row">{{funcionario.id}}</th>
+              <td>{{funcionario.nmFuncionario}}</td>
+              <td>{{funcionario.rg}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </accordion-group>
+    </div>
+  </accordion>
+</div>

@@ -1,0 +1,14 @@
+.badgeButton {
+  margin-right: 0.25vw;
+  text-align: center !important;
+  vertical-align: middle;
+  min-height: 23.77px;
+  border: none;
+}
+.profilePicture {
+  border-radius: 100px;
+  height: 10vw;
+  width: 10vw;
+  border:solid;
+  margin:1vw;
+}

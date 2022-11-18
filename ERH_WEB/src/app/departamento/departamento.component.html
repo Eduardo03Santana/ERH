@@ -1,0 +1,112 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col align-self-center">
+      <h1 style="text-align: center; margin-bottom: 1vw; margin-top: 1vw;">DEPARTAMENTOS</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let alert of alerts" class="alerts col align-self-end">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+    </div>
+  </div>
+
+  <accordion [closeOthers]="true" [isAnimated]="true" class="accordion">
+    <div *ngFor="let dp of departamentos; let i = index">
+      <accordion-group>
+        <button class="btn btn-block btn-link justify-content-between d-flex w-100  shadow-none"
+                accordion-heading type="button" style="text-decoration:none !important; color: black;">
+          <div class="pull-left float-left">{{departamentos[i].nmDepartamento}} - {{departamentos[i].sigla}}</div>
+          <span type="button" role="button" class="badge text-bg-dark float-right pull-right">{{dp.funcionarios.length}}</span>
+
+        </button>
+        <div>
+          <button (click)="openModal(template, dp, 'update')" type="button" class="badge text-bg-primary pull-left float-left badgeButton">Editar Departamento</button>
+          <button (click)="openModal(EditFuncs, dp,'editFuncs')" type="button" class="badge text-bg-warning pull-left float-left badgeButton">Editar funcionarios</button>
+          <button (click)="openModal(confirmModal, dp, 'delete')" type="button" class="badge text-bg-danger pull-left float-left badgeButton">Excluir</button>
+
+        </div>
+        <table class="table" style="cursor:default;">
+          <thead>
+            <tr>
+              <th scope="col">Foto</th>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">RG</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let funcionario of dp.funcionarios">
+              <ng-container>
+                <td><img src="{{funcionario.foto}}" class="img-fluid profilePicture" alt="..."></td>
+                <th scope="row">{{funcionario.id}}</th>
+                <td>{{funcionario.nmFuncionario}}</td>
+                <td>{{funcionario.rg}}</td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </accordion-group>
+    </div>
+    <div style="margin-top:0.25vw">
+      <button type="button" class="btn btn-dark" (click)="openModal(template, {id: 0, nmDepartamento:'', funcionarios:[], sigla:''}, 'add')">Novo Departamento</button>
+    </div>
+  </accordion>
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="tpModal == 'add'">Novo Departamento</h4>
+    <h4 class="modal-title pull-left" *ngIf="tpModal == 'update'">Editar Departamento</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="departamentoForm">
+      <div class="mb-3">
+        <label for="exampleInputNome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="exampleInputNome" aria-describedby="nomeHelp"
+               formControlName="nmDepartamento" value="">
+        <div id="nomeHelp" class="form-text">Insira um nome para o departamento</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputNome" class="form-label">Sigla</label>
+        <input type="text" class="form-control" id="exampleInputNome" aria-describedby="nomeHelp"
+               formControlName="sigla" value="{{genSigla()}}">
+        <div id="nomeHelp" class="form-text">Sigla</div>
+      </div>
+      <button *ngIf="tpModal == 'add'" class="btn btn-primary" (click)="addDepartamento(); modalRef?.hide()" [disabled]="!this.departamentoForm.valid">Adicionar</button>
+      <button *ngIf="tpModal == 'update'" class="btn btn-primary" (click)="updateDepartamento(); modalRef?.hide()">Atualizar</button>
+    </form>
+  </div>
+</ng-template>
+
+
+<ng-template #confirmModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Tem certeza?</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Deseja apagar este departamento e todos seus funcionarios vinculados?</p>
+    <button *ngIf="tpModal == 'delete'" class="btn btn-danger" (click)="deleteDepartamento(); modalRef?.hide()">Deletar</button>
+  </div>
+</ng-template>
+
+<ng-template #EditFuncs>
+  <div class="modal-header ">
+    <h4 class="modal-title pull-left">{{departamentoForm.controls["nmDepartamento"].value}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-funcionario [dpSelecionado]="this.dpEscolhido"></app-funcionario>
+  </div>
+</ng-template>
